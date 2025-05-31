@@ -1,0 +1,39 @@
+[package]
+name = "openmetrics"
+version = "0.1.0"
+edition = "2021"
+description = "DuckDB OpenMetrics extension"
+license = "LGPL-3.0"
+repository = "https://github.com/linux-china/duckdb-openmetrics.git"
+authors = ["linux-china <libing.chen@gmail.com>"]
+
+[lib]
+crate-type = ["cdylib"]
+
+[[example]]
+# crate-type can't be overriden for specific targets (at the moment)
+# src/wasm_lib.rs forwards to src/lib.rs so that we can change from cdylib
+# (that is needed while compiling natively) to staticlib (needed since the
+# actual linking will be done via emcc
+name = "openmetrics"
+path = "src/wasm_lib.rs"
+crate-type = ["staticlib"]
+
+[dependencies]
+duckdb = { version = "1.2.2", features = ["vtab-loadable"] }
+duckdb-loadable-macros = "0.1.6"
+libduckdb-sys = { version = "1.2.2", features = ["loadable-extension"] }
+ureq = { version = "3.0" }
+openmetrics-parser = { git = "https://github.com/linux-china/openmetrics-parser.git" }
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+strip = true
+lto = true
+opt-level = "z"
+codegen-units = 1
