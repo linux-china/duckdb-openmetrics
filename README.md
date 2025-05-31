@@ -19,8 +19,8 @@ duckdb> select * from prometheus('http://localhost:8888/actuator/prometheus','')
 
 Function `prometheus(url_or_path, source)` and `openmetrics(url_or_path, source)` take two parameters:
 
-- `url_or_path`: The URL or file path to the Prometheus or OpenMetrics endpoint.
-- `source`: A string representing the source of the metrics. If `source` is empty(`''`), `source` will be endpoint(
+- `url_or_path`(required): The URL or file path to the Prometheus or OpenMetrics endpoint.
+- `source`(required): A string representing the source of the metrics. If `source` is empty(`''`), `source` will be endpoint(
   host+port) of url or file path.
 
 # Metrics data table
