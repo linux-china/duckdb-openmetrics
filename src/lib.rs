@@ -3,6 +3,7 @@ extern crate duckdb_loadable_macros;
 extern crate libduckdb_sys;
 mod open_metrics;
 mod prometheus;
+mod utils;
 
 use duckdb::{Connection, Result};
 use duckdb_loadable_macros::duckdb_entrypoint_c_api;
