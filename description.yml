@@ -20,5 +20,5 @@ docs:
   extended_description: |
     Use the `prometheus` or `openmetrics` functions to query metrics data from a Prometheus or OpenMetrics endpoint.
     The `url_or_path` parameter specifies the endpoint to fetch metrics, and the `source` parameter can be used to specify the source of metrics.
-    If `source` is empty, and `source` could be endpoint(host+port) of url or file path.
+    If `source` is empty, and `source` will be endpoint(host+port) of url or file path.
     
