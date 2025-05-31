@@ -1,0 +1,24 @@
+extension:
+  name: openmetrics
+  description: Provides `prometheus(url, source)` and `openmetrics(url,source)` functions to query metrics data.
+  version: 0.0.1
+  language: Rust
+  build: cargo
+  license: MIT
+  excluded_platforms: "wasm_mvp;wasm_eh;wasm_threads;windows_amd64_rtools;windows_amd64_mingw;linux_amd64_musl"
+  requires_toolchains: "rust;python3"
+  maintainers:
+    - linux_china
+
+repo:
+  github: linux-china/duckdb-openmetrics
+  ref: main
+
+docs:
+  hello_world: |
+    FROM prometheus('http://localhost:8080/actuator/prometheus', '');
+  extended_description: |
+    Use the `prometheus` or `openmetrics` functions to query metrics data from a Prometheus or OpenMetrics endpoint.
+    The `url` parameter specifies the endpoint, and the `source` parameter can be used to specify the source of metrics.
+    If `source` is empty, and url's endpoint(host+port) will be used as the source.
+    
