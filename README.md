@@ -8,7 +8,7 @@ Features:
 - Prometheus support: `prometheus(url_or_path, source)`
 - OpenMetrics support: `openmetrics(url_or_path, source)`
 
-Why build this extension? I want to a $10/Month metrics system, and DuckLake is a good choice for that.
+Why build this extension? I want a $10/Month metrics system, and DuckLake is a good choice for that.
 
 ![Metrics LakeHouse](metrics-lakehouse.png)
 
