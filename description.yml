@@ -1,6 +1,6 @@
 extension:
   name: openmetrics
-  description: Provides `prometheus(url, source)` and `openmetrics(url,source)` functions to query metrics data.
+  description: Provides `prometheus(url_or_path, source)` and `openmetrics(url_or_path, source)` functions to query metrics data.
   version: 0.0.1
   language: Rust
   build: cargo
@@ -19,6 +19,6 @@ docs:
     FROM prometheus('http://localhost:8080/actuator/prometheus', '');
   extended_description: |
     Use the `prometheus` or `openmetrics` functions to query metrics data from a Prometheus or OpenMetrics endpoint.
-    The `url` parameter specifies the endpoint, and the `source` parameter can be used to specify the source of metrics.
-    If `source` is empty, and url's endpoint(host+port) will be used as the source.
+    The `url_or_path` parameter specifies the endpoint to fetch metrics, and the `source` parameter can be used to specify the source of metrics.
+    If `source` is empty, and `source` could be endpoint(host+port) of url or file path.
     
