@@ -1,0 +1,20 @@
+# name: test/sql/openmetrics.test
+# description: test openmetrics extension
+# group: [quack]
+
+# Before we load the extension, this will fail
+statement error
+SELECT prometheus('http://localhost:8080/actuator/prometheus','');
+----
+Catalog Error: Scalar Function with name rusty_quack does not exist!
+
+# Require statement will ensure the extension is loaded from now on
+require openmetrics
+
+require icu
+
+# Confirm the extension works
+query I
+SELECT * from prometheus('http://localhost:8080/actuator/prometheus','');
+----
+Rusty Quack Sam 🐥
