@@ -1,4 +1,4 @@
-use crate::utils::read_metrics_text;
+use crate::utils::{extract_source, read_metrics_text};
 use duckdb::core::{DataChunkHandle, Inserter, LogicalTypeHandle, LogicalTypeId};
 use duckdb::vtab::{BindInfo, InitInfo, TableFunctionInfo, VTab};
 use openmetrics_parser::prometheus::parse_prometheus;
@@ -10,7 +10,7 @@ use std::time::SystemTime;
 
 #[repr(C)]
 pub struct PrometheusParams {
-    pub url: String,
+    pub url_or_path: String,
     pub source: Option<String>,
 }
 
@@ -45,18 +45,13 @@ impl VTab for PrometheusVTab {
         );
         // json text for histogram and summary
         bind.add_result_column("details", LogicalTypeHandle::from(LogicalTypeId::Varchar));
-        let url = bind.get_parameter(0).to_string();
+        let url_or_path = bind.get_parameter(0).to_string();
         let mut source = bind.get_parameter(1).to_string();
         if source.is_empty() {
-            // If the source is not provided, extract endpoint from the URL
-            let offset = url.find("://").unwrap_or(0) + 3; // Skip protocol part
-            let end = url[offset..]
-                .find('/')
-                .map_or(url.len(), |pos| offset + pos);
-            source = url[offset..end].to_string();
+            source = extract_source(&url_or_path);
         }
         Ok(PrometheusParams {
-            url,
+            url_or_path: url_or_path,
             source: Some(source),
         })
     }
@@ -82,7 +77,7 @@ impl VTab for PrometheusVTab {
                 .unwrap()
                 .as_millis() as u64
                 * 1000;
-            let http_url = bind_data.url.as_str();
+            let http_url = bind_data.url_or_path.as_str();
             let source = &bind_data.source.clone().unwrap_or("".to_owned());
             let vector_name = output.flat_vector(0);
             let vector_metric_type = output.flat_vector(1);

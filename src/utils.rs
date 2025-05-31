@@ -32,3 +32,16 @@ pub fn read_metrics_text(url: &str) -> Result<String, Box<dyn Error>> {
         }
     }
 }
+
+pub fn extract_source(url_or_path: &str) -> String {
+    if url_or_path.starts_with("http://") || url_or_path.starts_with("https://") {
+        // If the source is not provided, extract endpoint from the URL
+        let offset = url_or_path.find("://").unwrap_or(0) + 3; // Skip protocol part
+        let end = url_or_path[offset..]
+            .find('/')
+            .map_or(url_or_path.len(), |pos| offset + pos);
+        url_or_path[offset..end].to_string()
+    } else {
+        url_or_path.to_string()
+    }
+}
