@@ -114,10 +114,12 @@ where starts_with(labels, '{')
   and json_extract(labels::JSON, '$.area') = '"heap"';
 ```
 
+**Attention**: There is no JSON type in [DuckLake Data Types](https://ducklake.select/docs/stable/specification/data_types), 
+and now `labels` and `details` columns are stored as JSON text.
+
 # Todo
 
 - Native map type for `labels` column: https://github.com/duckdb/duckdb-rs/issues/81
-- Native JSON type for `details` column
 
 # References
 
